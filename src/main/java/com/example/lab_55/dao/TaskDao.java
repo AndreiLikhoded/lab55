@@ -1,14 +1,18 @@
 package com.example.lab_55.dao;
 
+import com.example.lab_55.entity.Task;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Component;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
+
+@Component
 public class TaskDao extends BaseDao{
     public TaskDao(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         super(jdbcTemplate, namedParameterJdbcTemplate);
@@ -37,7 +41,7 @@ public class TaskDao extends BaseDao{
 
         jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
             public void setValues(PreparedStatement ps, int i) throws SQLException {
-                ps.setString(1, tasks.get(i).getId());
+                ps.setInt(1, tasks.get(i).getId());
                 ps.setString(2, tasks.get(i).getHeader());
                 ps.setString(3, tasks.get(i).getStatus());
                 ps.setString(4, tasks.get(i).getDatePerform());
